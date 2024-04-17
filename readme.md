@@ -29,13 +29,14 @@
 - Setup `.env` ( each folder (front/back) has `.env.example` )
 - Run backend
 - `cd back`
-- `pip3 -r requirement.txt`
+- `pip3 install -r requirement.txt`
 - `python3 main.py` _# Create/recreate DB models_
-- `python3 -m uvicorn back.main:app`
+- `python3 -m uvicorn main:app --port 5050`
 - Run frontend
 - `cd front`
 - `npm i`
-- `next start`
+- `npm run build`
+- `npm run start`
 - Scrape new records from RSS
 - `cd back/modules`
 - `python3 scrapper.py`
