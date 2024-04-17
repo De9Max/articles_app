@@ -1,17 +1,17 @@
-import { FormControl, InputLabel, Select, MenuItem } from '@mui/material'
+import { FormControl, InputLabel, Select, MenuItem } from '@mui/material';
 
 const SortingDropdown = ({ value, onChange }) => {
   const handleSortChange = (event) => {
-    onChange(event.target.value)
-  }
+    onChange(event.target.value);
+  };
 
   return (
-    <div className="ml-4 w-full">
-      <FormControl variant="outlined" size="small">
-        <InputLabel id="sorting-label">Sort By</InputLabel>
+    <div className='ml-4 w-full'>
+      <FormControl variant='outlined' size='small'>
+        <InputLabel id='sorting-label'>Sort By</InputLabel>
         <Select
-          labelId="sorting-label"
-          id="sorting"
+          labelId='sorting-label'
+          id='sorting'
           value={value}
           onChange={handleSortChange}
         >
@@ -20,7 +20,7 @@ const SortingDropdown = ({ value, onChange }) => {
         </Select>
       </FormControl>
     </div>
-  )
-}
+  );
+};
 
-export default SortingDropdown
+export default SortingDropdown;

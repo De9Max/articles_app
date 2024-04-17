@@ -1,4 +1,4 @@
-import styled from '@emotion/styled'
+import styled from '@emotion/styled';
 
 export const StyledErrorMessage = styled.div`
   font-size: 12px;
@@ -9,7 +9,7 @@ export const StyledErrorMessage = styled.div`
     content: '❌ ';
     font-size: 10px;
   }
-`
+`;
 
 export const StyledInput = styled.input`
   outline: 1px solid lightgray;
@@ -34,4 +34,4 @@ export const StyledInput = styled.input`
       transform: translateX(0);
     }
   }
-`
+`;

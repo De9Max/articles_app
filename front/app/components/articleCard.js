@@ -6,9 +6,9 @@ import {
   CardContent,
   CardMedia,
   Typography,
-} from '@mui/material'
-import Date from '@/app/components/date'
-import Link from 'next/link'
+} from '@mui/material';
+import Date from '@/app/components/date';
+import Link from 'next/link';
 
 export default function ArticleCard({ article }) {
   return (
@@ -21,30 +21,30 @@ export default function ArticleCard({ article }) {
     >
       <CardActionArea style={{ flexGrow: 1 }}>
         <CardMedia
-          component="img"
-          height="140"
+          component='img'
+          height='140'
           image={article.image_href}
           alt={article.title}
         />
         <CardContent>
-          <Typography gutterBottom variant="h5" component="div">
+          <Typography gutterBottom variant='h5' component='div'>
             {article.title}
           </Typography>
-          <Typography variant="body2" color="text.secondary">
+          <Typography variant='body2' color='text.secondary'>
             {article.summary}
           </Typography>
-          <Typography variant="h8" className="absolute right-3 mt-1 mr-1">
+          <Typography variant='h8' className='absolute right-3 mr-1 mt-1'>
             <Date dateString={article.published} />
           </Typography>
         </CardContent>
       </CardActionArea>
       <CardActions>
         <Link href={`${article.link}`} style={{ textDecoration: 'none' }}>
-          <Button size="small" color="primary">
+          <Button size='small' color='primary'>
             More info
           </Button>
         </Link>
       </CardActions>
     </Card>
-  )
+  );
 }

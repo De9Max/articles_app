@@ -1,4 +1,4 @@
-'use client'
+'use client';
 
 import {
   IconButton,
@@ -9,35 +9,38 @@ import {
   TableContainer,
   TableHead,
   TableRow,
-} from '@mui/material'
-import React, { Suspense, useLayoutEffect, useState } from 'react'
-import { useDataPaginate } from '@/lib/paginate'
-import Pagination from '@/app/components/Pagination'
-import Date from '@/app/components/date'
-import { selectIsLoggedIn, selectUser } from '@/lib/features/user/userSelectors'
-import { useAppSelector } from '@/lib/hooks'
-import { redirect, useRouter } from 'next/navigation'
-import EditIcon from '@mui/icons-material/Edit'
-import DeleteIcon from '@mui/icons-material/Delete'
-import Modal from '@/app/components/modal'
-import EditForm from '@/app/components/editForm'
+} from '@mui/material';
+import React, { Suspense, useLayoutEffect, useState } from 'react';
+import { useDataPaginate } from '@/lib/paginate';
+import Pagination from '@/app/components/Pagination';
+import Date from '@/app/components/date';
+import {
+  selectIsLoggedIn,
+  selectUser,
+} from '@/lib/features/user/userSelectors';
+import { useAppSelector } from '@/lib/hooks';
+import { redirect, useRouter } from 'next/navigation';
+import EditIcon from '@mui/icons-material/Edit';
+import DeleteIcon from '@mui/icons-material/Delete';
+import Modal from '@/app/components/modal';
+import EditForm from '@/app/components/editForm';
 
 export default function Home() {
-  const isLogged = useAppSelector(selectIsLoggedIn)
-  const user = useAppSelector(selectUser)
-  const [article, setArticle] = useState({})
-  const { push } = useRouter()
+  const isLogged = useAppSelector(selectIsLoggedIn);
+  const user = useAppSelector(selectUser);
+  const [article, setArticle] = useState({});
+  const { push } = useRouter();
   const { setPage, data, currentPage, pageCount, UpdateData } = useDataPaginate(
     9,
     '-published',
     ''
-  )
+  );
 
   useLayoutEffect(() => {
     if (!isLogged) {
-      redirect('/')
+      redirect('/');
     }
-  }, [])
+  }, []);
 
   async function onDelete(row) {
     try {
@@ -50,26 +53,26 @@ export default function Home() {
             Authorization: 'Bearer ' + user.token,
           },
         }
-      )
+      );
 
       if (!response.ok) {
-        let result = await response.json()
-        console.log(result)
+        let result = await response.json();
+        console.log(result);
       } else {
-        UpdateData()
+        UpdateData();
       }
     } catch (error) {
-      throw new Error('Error deleting article: ' + error.message)
+      throw new Error('Error deleting article: ' + error.message);
     }
   }
 
   async function onEdit(row) {
-    push('?edit=true')
-    setArticle(row)
+    push('?edit=true');
+    setArticle(row);
   }
 
   return (
-    <div className="container mx-auto p-4 flex flex-col items-center">
+    <div className='container mx-auto flex flex-col items-center p-4'>
       <TableContainer component={Paper}>
         <Table>
           <TableHead>
@@ -87,7 +90,7 @@ export default function Home() {
               <TableRow key={0}>
                 <TableCell>-</TableCell>
                 <TableCell>
-                  <div className="w-128 h-128">No data</div>
+                  <div className='w-128 h-128'>No data</div>
                 </TableCell>
                 <TableCell>No data</TableCell>
                 <TableCell>No data</TableCell>
@@ -100,8 +103,8 @@ export default function Home() {
                   <TableRow key={index}>
                     <TableCell>{row.id}</TableCell>
                     <TableCell>
-                      <div className="w-128 h-128">
-                        <img src={row.image_href} alt="Article" />
+                      <div className='w-128 h-128'>
+                        <img src={row.image_href} alt='Article' />
                       </div>
                     </TableCell>
                     <TableCell>{row.title}</TableCell>
@@ -110,17 +113,17 @@ export default function Home() {
                       <Date dateString={row.published} />
                     </TableCell>
                     <TableCell>
-                      <div className="flex gap-2">
+                      <div className='flex gap-2'>
                         <IconButton
                           onClick={() => onEdit(row)}
-                          aria-label="edit"
+                          aria-label='edit'
                         >
                           <EditIcon />
                         </IconButton>
 
                         <IconButton
                           onClick={() => onDelete(row)}
-                          aria-label="delete"
+                          aria-label='delete'
                         >
                           <DeleteIcon />
                         </IconButton>
@@ -140,17 +143,17 @@ export default function Home() {
           totalPages={pageCount}
           currentPage={currentPage}
           onChange={(e, value) => {
-            setPage(value)
+            setPage(value);
           }}
         />
       )}
       <Suspense>
         <Modal
-          modal_name="Edit Panel"
-          path="edit"
+          modal_name='Edit Panel'
+          path='edit'
           form={<EditForm article={article} updateData={UpdateData} />}
         />
       </Suspense>
     </div>
-  )
+  );
 }

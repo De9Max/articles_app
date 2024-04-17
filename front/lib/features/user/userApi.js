@@ -9,19 +9,19 @@ export const userLogin = async (credentials) => {
         },
         body: JSON.stringify(credentials),
       }
-    )
-    const data = await response.json()
+    );
+    const data = await response.json();
     if (!response.ok) {
       if (data) {
-        throw new Error(data.detail)
+        throw new Error(data.detail);
       }
     }
 
-    return data
+    return data;
   } catch (error) {
-    throw new Error(error.message)
+    throw new Error(error.message);
   }
-}
+};
 
 export const fetchUser = async (token) => {
   try {
@@ -34,15 +34,15 @@ export const fetchUser = async (token) => {
           Authorization: 'Bearer ' + token,
         },
       }
-    )
+    );
     if (!response.ok) {
-      throw new Error('Failed to fetch user profile')
+      throw new Error('Failed to fetch user profile');
     }
 
-    const userProfile = await response.json()
-    userProfile.token = token
-    return userProfile
+    const userProfile = await response.json();
+    userProfile.token = token;
+    return userProfile;
   } catch (error) {
-    throw new Error('Error fetching user profile: ' + error.message)
+    throw new Error('Error fetching user profile: ' + error.message);
   }
-}
+};

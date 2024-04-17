@@ -1,30 +1,30 @@
-'use client'
+'use client';
 
-import { useFormik } from 'formik'
-import { selectUser } from '@/lib/features/user/userSelectors'
-import { useAppSelector } from '@/lib/hooks'
-import { useRouter } from 'next/navigation'
+import { useFormik } from 'formik';
+import { selectUser } from '@/lib/features/user/userSelectors';
+import { useAppSelector } from '@/lib/hooks';
+import { useRouter } from 'next/navigation';
 import {
   StyledErrorMessage,
   StyledInput,
-} from '@/app/components/styled_components'
+} from '@/app/components/styled_components';
 
 const validate = (values) => {
-  const errors = {}
+  const errors = {};
   if (!values.published) {
-    errors.published = 'Date is required'
+    errors.published = 'Date is required';
   } else {
-    const dateFormatRegex = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}$/
+    const dateFormatRegex = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}$/;
     if (!dateFormatRegex.test(values.published)) {
-      errors.published = 'Invalid date format (YYYY-MM-DDTHH:MM:SS)'
+      errors.published = 'Invalid date format (YYYY-MM-DDTHH:MM:SS)';
     }
   }
-  return errors
-}
+  return errors;
+};
 
 export default function EditForm({ article, updateData }) {
-  const user = useAppSelector(selectUser)
-  const { push } = useRouter()
+  const user = useAppSelector(selectUser);
+  const { push } = useRouter();
   const formik = useFormik({
     initialValues: {
       id: article.id,
@@ -37,7 +37,7 @@ export default function EditForm({ article, updateData }) {
     validate,
     onSubmit: async (values) => {
       try {
-        console.log(JSON.stringify(values))
+        console.log(JSON.stringify(values));
         const response = await fetch(
           `${process.env.NEXT_PUBLIC_API_URL}/api/articles/${values.id}`,
           {
@@ -48,128 +48,128 @@ export default function EditForm({ article, updateData }) {
             },
             body: JSON.stringify(values),
           }
-        )
+        );
 
         if (!response.ok) {
-          let result = await response.json()
-          console.log(result.detail)
-          formik.errors.api_error = result.detail[0].msg.toString()
+          let result = await response.json();
+          console.log(result.detail);
+          formik.errors.api_error = result.detail[0].msg.toString();
         } else {
-          push('/admin')
-          updateData()
+          push('/admin');
+          updateData();
         }
       } catch (error) {
-        throw new Error('Error updating article: ' + error.message)
+        throw new Error('Error updating article: ' + error.message);
       }
     },
-  })
+  });
   return (
     <form onSubmit={formik.handleSubmit}>
-      <div className="mb-2">
-        <label htmlFor="id" className="block text-sm font-medium text-gray-700">
+      <div className='mb-2'>
+        <label htmlFor='id' className='block text-sm font-medium text-gray-700'>
           ID
         </label>
         <StyledInput
-          type="text"
-          id="id"
-          name="id"
+          type='text'
+          id='id'
+          name='id'
           value={formik.values.id}
           disabled
           style={{ width: '50rem' }}
         />
       </div>
-      <div className="mb-2">
+      <div className='mb-2'>
         <label
-          htmlFor="image_preview"
-          className="block text-sm font-medium text-gray-700"
+          htmlFor='image_preview'
+          className='block text-sm font-medium text-gray-700'
         >
           Preview
         </label>
         <img
-          alt="image_preview"
+          alt='image_preview'
           src={formik.values.image}
-          id="image_preview"
-          className="w-32 h-32"
+          id='image_preview'
+          className='h-32 w-32'
         />
       </div>
-      <div className="mb-2">
+      <div className='mb-2'>
         <label
-          htmlFor="image"
-          className="block text-sm font-medium text-gray-700"
+          htmlFor='image'
+          className='block text-sm font-medium text-gray-700'
         >
           Image
         </label>
         <StyledInput
-          type="text"
-          id="image"
-          name="image"
+          type='text'
+          id='image'
+          name='image'
           value={formik.values.image}
           style={{ width: '50rem' }}
           disabled
         />
       </div>
-      <div className="mb-2">
+      <div className='mb-2'>
         <label
-          htmlFor="link"
-          className="block text-sm font-medium text-gray-700"
+          htmlFor='link'
+          className='block text-sm font-medium text-gray-700'
         >
           Link
         </label>
         <StyledInput
-          type="text"
-          id="link"
-          name="link"
+          type='text'
+          id='link'
+          name='link'
           value={formik.values.link}
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
           style={{ width: '50rem' }}
         />
       </div>
-      <div className="mb-2">
+      <div className='mb-2'>
         <label
-          htmlFor="title"
-          className="block text-sm font-medium text-gray-700"
+          htmlFor='title'
+          className='block text-sm font-medium text-gray-700'
         >
           Title
         </label>
         <StyledInput
-          type="text"
-          id="title"
-          name="title"
+          type='text'
+          id='title'
+          name='title'
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
           value={formik.values.title}
           style={{ width: '50rem' }}
         />
       </div>
-      <div className="mb-2">
+      <div className='mb-2'>
         <label
-          htmlFor="summary"
-          className="block text-sm font-medium text-gray-700"
+          htmlFor='summary'
+          className='block text-sm font-medium text-gray-700'
         >
           Summary
         </label>
         <StyledInput
-          type="text"
-          id="summary"
-          name="summary"
+          type='text'
+          id='summary'
+          name='summary'
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
           value={formik.values.summary}
           style={{ width: '50rem' }}
         />
       </div>
-      <div className="mb-2">
+      <div className='mb-2'>
         <label
-          htmlFor="published"
-          className="block text-sm font-medium text-gray-700"
+          htmlFor='published'
+          className='block text-sm font-medium text-gray-700'
         >
           Published
         </label>
         <StyledInput
-          type="text"
-          id="published"
-          name="published"
+          type='text'
+          id='published'
+          name='published'
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
           value={formik.values.published}
@@ -181,8 +181,8 @@ export default function EditForm({ article, updateData }) {
       ) : null}
 
       <button
-        type="submit"
-        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+        type='submit'
+        className='rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700'
       >
         Edit
       </button>
@@ -190,5 +190,5 @@ export default function EditForm({ article, updateData }) {
         <StyledErrorMessage>{formik.errors.api_error}</StyledErrorMessage>
       ) : null}
     </form>
-  )
+  );
 }
